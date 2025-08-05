@@ -1,0 +1,25 @@
+volumes:
+  postgres_data:
+
+services:
+  db:
+    image: postgres:13
+    env_file: .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  scraper:
+    build: ./scripts/
+    env_file: .env
+    depends_on: 
+      - db
+
+  api:
+    build: ./api/
+    env_file: .env
+    ports:
+      - "8000:80"
+    depends_on: 
+      - scraper
