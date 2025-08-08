@@ -28,7 +28,7 @@ DB_PASS = os.getenv("POSTGRES_PASSWORD")
 DB_NAME = os.getenv("POSTGRES_DB")
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
-print(DB_HOST)
+
 BASE_URL = os.getenv(
     "SPIMEX_BASE_URL",
     "https://spimex.com/markets/oil_products/trades/results/"

@@ -32,6 +32,7 @@ async def get_last_trading_dates_service(
     )
     return LastTradingDatesResponse(dates=dates[:count])
 
+
 async def get_dynamics_service(
     session: AsyncSession,
     start_date: date,
@@ -42,7 +43,7 @@ async def get_dynamics_service(
 ) -> DynamicsResponse:
     if start_date > end_date:
         raise HTTPException(status_code=400, detail="start_date must be <= end_date")
-    
+
     records = await get_trading_results_by_date_range(
         session,
         start_date=start_date,
@@ -52,6 +53,7 @@ async def get_dynamics_service(
         delivery_basis_id=delivery_basis_id
     )
     return DynamicsResponse(trades=[TradingResultDetail.from_orm(r) for r in records])
+
 
 async def get_trading_results_service(
     session: AsyncSession,
@@ -65,7 +67,7 @@ async def get_trading_results_service(
             status_code=400,
             detail="Укажите хотя бы один из фильтров: oil_id, delivery_type_id или delivery_basis_id"
         )
-    
+
     records = await get_latest_trading_results(
         session,
         oil_id=oil_id,

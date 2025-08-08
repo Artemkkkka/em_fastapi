@@ -20,9 +20,10 @@ async def get_distinct_dates(
     if delivery_basis_id:
         stmt = stmt.where(TradingResult.delivery_basis_id == delivery_basis_id)
     stmt = stmt.order_by(desc(TradingResult.date))
-    
+
     rows = await session.execute(stmt)
     return [r[0] for r in rows.fetchall()]
+
 
 async def get_trading_results_by_date_range(
     session: AsyncSession,
@@ -42,9 +43,10 @@ async def get_trading_results_by_date_range(
     if delivery_basis_id:
         stmt = stmt.where(TradingResult.delivery_basis_id == delivery_basis_id)
     stmt = stmt.order_by(asc(TradingResult.date))
-    
+
     rows = await session.execute(stmt)
     return rows.scalars().all()
+
 
 async def get_latest_trading_results(
     session: AsyncSession,
@@ -59,11 +61,11 @@ async def get_latest_trading_results(
         filters.append(TradingResult.delivery_type_id == delivery_type_id)
     if delivery_basis_id:
         filters.append(TradingResult.delivery_basis_id == delivery_basis_id)
-    
+
     max_date = (await session.execute(
         select(func.max(TradingResult.date)).where(*filters)
     )).scalar_one()
-    
+
     stmt = (
         select(TradingResult)
         .where(TradingResult.date == max_date, *filters)
