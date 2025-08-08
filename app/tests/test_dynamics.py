@@ -58,7 +58,9 @@ async def test_get_dynamics_service_valid_and_invalid_dates(mocker):
         await get_dynamics_service(session, date(2023, 5, 2), date(2023, 5, 1))
     assert exc_info.value.status_code == 400
 
-    result = await get_dynamics_service(session, date(2023, 5, 1), date(2023, 5, 2), oil_id="123")
+    result = await get_dynamics_service(
+        session, date(2023, 5, 1), date(2023, 5, 2), oil_id="123"
+    )
     assert isinstance(result, DynamicsResponse)
 
     trade = result.trades[0]

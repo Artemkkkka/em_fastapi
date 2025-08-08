@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from .models import TradingResult
 
+
 async def get_distinct_dates(
     session: AsyncSession,
     oil_id: Optional[str] = None,
